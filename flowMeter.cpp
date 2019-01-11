@@ -72,18 +72,18 @@ loop ()
       vAverage = totalDistance / totalTime;
       Serial.print ("Time= ");
       Serial.print (totalTime,5);  // Print the integer part of the variable
-      Serial.print ("s; ");
+      Serial.print ("s;");
       Serial.print ("pulseCount= ");
       Serial.print (pulseCount);  // Print the integer part of the variable
-      Serial.print ("; flowRate= ");
+      Serial.print (";flowRate= ");
       Serial.print (flowRate, 7);  // Print the integer part of the variable
-      Serial.print ("L/min; ");
+      Serial.print ("L/min;");
       Serial.print ("v= ");
       Serial.print (v, 7);  // Print the integer part of the variable
-      Serial.print ("m/s; ");
+      Serial.print ("m/s;");
       Serial.print ("vAverage= ");
       Serial.print (vAverage, 7);  // Print the integer part of the variable
-      Serial.print ("m/s; \n");
+      Serial.print ("m/s;\n");
 
       pulseCount = 0;
       oldTime = millis ();
@@ -97,3 +97,4 @@ pulseCounter ()
   // Increment the pulse counter
   pulseCount++;
 }
+
