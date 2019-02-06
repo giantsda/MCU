@@ -1,13 +1,18 @@
 #include <Arduino.h>
+#include "LiquidCrystal.h"
 
 byte statusLed = 13;
 byte sensorInterrupt = 0;  // 0 = digital pin 2
 byte sensorPin = 2;
-
+#define LEDOUTPUT
 // The hall-effect flow sensor outputs approximately 4.5 pulses per second per L/minute of flow.
 float calibrationFactor = 4.5;
 
 volatile byte pulseCount;
+
+#ifdef  LEDOUTPUT
+LiquidCrystal lcd (7, 8, 9, 10, 11, 12);
+#endif
 
 float flowRate;
 float v; //m/s
@@ -29,6 +34,10 @@ setup ()
 {
   // Initialize a serial connection for reporting values to the host
   Serial.begin (9600);
+
+#ifdef  LEDOUTPUT
+  lcd.begin (16, 2);
+#endif
 
   // Set up the status LED line as an output
   pinMode (statusLed, OUTPUT);
@@ -71,19 +80,31 @@ loop ()
       totalDistance = totalDistance + t / 1000. * v;
       vAverage = totalDistance / totalTime;
       Serial.print ("Time= ");
-      Serial.print (totalTime,5);  // Print the integer part of the variable
+      Serial.print (totalTime, 5);  // Print the integer part of the variable
       Serial.print ("s;");
       Serial.print ("pulseCount= ");
       Serial.print (pulseCount);  // Print the integer part of the variable
-      Serial.print (";flowRate= ");
-      Serial.print (flowRate, 7);  // Print the integer part of the variable
-      Serial.print ("L/min;");
-      Serial.print ("v= ");
+//      Serial.print (";flowRate= ");
+//      Serial.print (flowRate, 7);  // Print the integer part of the variable
+//      Serial.print ("L/min");
+      Serial.print (";v= ");
       Serial.print (v, 7);  // Print the integer part of the variable
       Serial.print ("m/s;");
       Serial.print ("vAverage= ");
       Serial.print (vAverage, 7);  // Print the integer part of the variable
       Serial.print ("m/s;\n");
+
+#ifdef  LEDOUTPUT
+      lcd.setCursor (0, 0);
+      lcd.print ("t=");
+      lcd.print (totalTime, 1);
+      lcd.print (";v=");
+      lcd.print (v, 5);  // Print the integer part of the variable
+      lcd.setCursor (0, 1);
+      lcd.print ("meanV= ");
+      lcd.print (vAverage, 5);  // Print the integer part of the variable
+
+#endif
 
       pulseCount = 0;
       oldTime = millis ();
@@ -97,4 +118,3 @@ pulseCounter ()
   // Increment the pulse counter
   pulseCount++;
 }
-
