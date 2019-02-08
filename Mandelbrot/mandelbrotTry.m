@@ -1,14 +1,14 @@
 % x is honrizontal; y is vetical;
-% figure;
-% set(gcf,'outerposition',get(0,'screensize'));
+figure;
+set(gcf,'outerposition',get(0,'screensize'));
 x1=-2.5;
 x2=1;
 y1=-1;
 y2=1;
 xLength=abs(x1-x2);
 yLength=abs(y1-y2);
-xPixel=320;
-yPixel=240;
+xPixel=760;
+yPixel=640;
 dx=xLength/xPixel;
 dy=yLength/yPixel;
 

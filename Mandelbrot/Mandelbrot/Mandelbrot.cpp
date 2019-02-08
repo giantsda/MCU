@@ -30,10 +30,10 @@
 // (on the 2-row header at the end of the board).
 
 // Assign human-readable names to some common 16-bit color values:
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define	GREEN   0x07E0
+#define BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
 #define CYAN    0x07FF
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
@@ -44,23 +44,20 @@ Elegoo_TFTLCD tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 // a simpler declaration can optionally be used:
 // Elegoo_TFTLCD tft;
 
-word
-ConvertRGB (byte R, byte G, byte B)
-{
-  return (((R & 0xF8) << 8) | ((G & 0xFC) << 3) | (B >> 3));
-}
+// sacrifice precision to speed up
+#define double float
 
 // map scalar to rainbow map
 typedef struct
 {
-  double r, g, b;
+  int r, g, b;
 } COLOUR;
 
 COLOUR
 GetColour (double v, double vmin, double vmax)
 {
   COLOUR c =
-    { 1.0, 1.0, 1.0 }; // white
+    { 255, 255, 255 }; // white
   double dv;
   if (v < vmin)
     v = vmin;
@@ -70,26 +67,26 @@ GetColour (double v, double vmin, double vmax)
   if (v < (vmin + 0.25 * dv))
     {
       c.r = 0;
-      c.g = 4 * (v - vmin) / dv;
+      c.g = 4 * (v - vmin) / dv * 255;
     }
   else if (v < (vmin + 0.5 * dv))
     {
       c.r = 0;
-      c.b = 1 + 4 * (vmin + 0.25 * dv - v) / dv;
+      c.b = (1 + 4 * (vmin + 0.25 * dv - v) / dv) * 255;
     }
   else if (v < (vmin + 0.75 * dv))
     {
-      c.r = 4 * (v - vmin - 0.5 * dv) / dv;
+      c.r = 4 * (v - vmin - 0.5 * dv) / dv * 255;
       c.b = 0;
     }
   else
     {
-      c.g = 1 + 4 * (vmin + 0.75 * dv - v) / dv;
+      c.g = (1 + 4 * (vmin + 0.75 * dv - v) / dv) * 255;
       c.b = 0;
     }
-  c.r = floor (c.r * 255);
-  c.g = floor (c.g * 255);
-  c.b = floor (c.b * 255);
+//  c.r = floor (c.r * 255);
+//  c.g = floor (c.g * 255);
+//  c.b = floor (c.b * 255);
   return (c);
 }
 
@@ -133,34 +130,13 @@ setup (void)
 
   tft.setRotation (1);
 
-//  while (1)
-//    {
-//      double haha = 0;
-//      while (haha <= 1.)
-//	{
-//	  c = GetColour (haha, 0., 1.);
-//	  tft.fillScreen (ConvertRGB (c.r, c.g, c.b));
-//	  tft.setCursor (0, 0);
-//	  tft.setTextColor (WHITE);
-//	  tft.setTextSize (2);
-//	  tft.print (haha);
-//	  tft.print ("; ");
-//	  tft.print (c.r);
-//	  tft.print ("; ");
-//	  tft.print (c.g);
-//	  tft.print ("; ");
-//	  tft.print (c.b);
-//	  tft.print ("; ");
-//	  haha = haha + 0.01;
-//	}
-//    }
 }
 
 void
 loop (void)
 {
   double dx, dy;
-  int maxIte = 50;
+  int maxIte = 15;
   while (1)
     {
       x1 = x0 - 2. * exp (-zm / 20.);
@@ -178,28 +154,28 @@ loop (void)
 //      tft.print (dx, 5);
 //      delay (1000000);
       for (i = 0; i < height; i++)
-	for (j = 0; j < width; j++)
-	  {
-	    cR = j * dx + x1;
-	    cI = i * dy + y1;
-	    R = 0;
-	    I = 0;
-	    iteration = 0;
-	    while (I * I + R * R <= 4. && iteration < maxIte)
-	      {
-		Rtemp = R * R - I * I + cR;
-		I = 2 * R * I + cI;
-		R = Rtemp;
-		iteration = iteration + 1;
-	      }
-	    c = GetColour (iteration, 1, maxIte);
+  for (j = 0; j < width; j++)
+    {
+      cR = j * dx + x1;
+      cI = i * dy + y1;
+      R = 0;
+      I = 0;
+      iteration = 0;
+      while (I * I + R * R <= 4. && iteration < maxIte)
+        {
+    Rtemp = R * R - I * I + cR;
+    I = 2 * R * I + cI;
+    R = Rtemp;
+    iteration = iteration + 1;
+        }
+      c = GetColour (iteration, 1, maxIte);
 
-//	    tft.fillCircle (100, 50, 20, WHITE);
-//	    tft.fillCircle (50, 100, 20, WHITE);
-//	    delay (5000000);
-	    tft.drawPixel (j, i, ConvertRGB (c.r, c.g, c.b));
-	  }
+//      tft.fillCircle (100, 50, 20, WHITE);
+//      tft.fillCircle (50, 100, 20, WHITE);
+//      delay (5000000);
+      tft.drawPixel (j, i, tft.color565 (c.r, c.g, c.b));
+    }
       tft.fillScreen (BLACK);
-      zm = zm + 21.5;
+      zm = zm + 2.5;
     }
 }
