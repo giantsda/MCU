@@ -95,8 +95,8 @@ double x0 = -0.21503361460851339;
 double y0 = 0.67999116792639069;
 double x1, x2, y1, y2, x, y;
 int i, j;
-int width = tft.height ()*0.6;  //320
-int height = tft.width ()*0.6;  //240
+int width = tft.height ();  //320
+int height = tft.width ();  //240
 double cR, cI, R, I, iteration, Rtemp;
 
 COLOUR c;
@@ -153,35 +153,42 @@ loop (void)
 //      tft.print ("  ");
 //      tft.print (dx, 5);
 //      delay (1000000);
-      for (int p = 0; p < width * height * 0.3; p++)
-  {
-    i = random (height);
-    j = random (width);
 
-    cR = j * dx + x1;
-    cI = i * dy + y1;
-    R = 0;
-    I = 0;
-    iteration = 0;
-    while (I * I + R * R <= 4. && iteration < maxIte)
-      {
-        Rtemp = R * R - I * I + cR;
-        I = 2 * R * I + cI;
-        R = Rtemp;
-        iteration = iteration + 1;
-      }
-    c = GetColour (iteration, 1, maxIte);
+      //      for (int p = 0; p < width * height * 0.3; p++)
+//  {
+//    i = random (height);
+//    j = random (width);
+      for (i = 0; i < height; i++)
+  for (j = 0; j < width; j++)
+    {
+      cR = j * dx + x1;
+      cI = i * dy + y1;
+      R = 0;
+      I = 0;
+      iteration = 0;
+      while (I * I + R * R <= 4. && iteration < maxIte)
+        {
+    Rtemp = R * R - I * I + cR;
+    I = 2 * R * I + cI;
+    R = Rtemp;
+    iteration = iteration + 1;
+        }
 
 //      tft.fillCircle (100, 50, 20, WHITE);
 //      tft.fillCircle (50, 100, 20, WHITE);
 //      delay (5000000);
 
-
+      if (iteration <= maxIte / 10|| iteration==maxIte)
+        continue;
+      else
+        {
+    c = GetColour (iteration, 1, maxIte);
     tft.drawPixel (j, i, tft.color565 (c.r, c.g, c.b));
+        }
+
 //    tft.fillRect(j,i,random (1,2),random (1,2),tft.color565 (c.r, c.g, c.b));
 
-
-  }
+    }
       tft.fillScreen (BLACK);
       zm = zm + 2.5;
     }
