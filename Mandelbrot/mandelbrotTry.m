@@ -2,20 +2,38 @@
 close all;
 figure;
 set(gcf,'outerposition',get(0,'screensize')*1);
-xPixel=320*4;
-yPixel=240*4;
+xPixel=320;
+yPixel=240;
 maxIter=200;
 iterMap=zeros(yPixel,xPixel);
 zm=1;
 x0=-0.21503361460851339;
 y0=0.67999116792639069;
+
+xmin=  -2.1175;
+xmax= 1.6874;
+ymin= -0.7469;
+ymax= 2.1068;
+
+
 PICK=0;
 FIRST=1;
 frame=1;
 screenExamLength=floor(yPixel/100);
 dx=1;
 
+
+
+
+x0=xmin+rand(1)*(xmax-xmin);
+y0=ymin+rand(1)*(ymax-ymin);
+
+% x0=-0.658266142810369
+% y0=0.437622059571268
+
+
 clear F;
+
 while dx>1e-14
     dx
     if PICK
@@ -23,18 +41,17 @@ while dx>1e-14
         [I,J]=ind2sub(size(gradientMag),ind); % get row and column number
         pickS=[I J];
         
-        if FIRST
-            pickI=randi(length(I));
-        else
-            for i=1:length (pickS)
-                xp=x1+dx*(J(i)-1);
-                yp=y1+dy*(I(i)-1);
-                pickS(i,3)=sqrt((xp-x0)^2+(yp-y0)^2);% distance
-            end
-            [~, pickI]=min(pickS(:,3)); % find the smallest distance one;
+        
+        for i=1:length (pickS)
+            xp=x1+dx*(J(i)-1);
+            yp=y1+dy*(I(i)-1);
+            pickS(i,3)=sqrt((xp-x0)^2+(yp-y0)^2);% distance
         end
+        [~, pickI]=min(pickS(:,3)); % find the smallest distance one;
         x0=x1+dx*(J(pickI)-1);
         y0=y1+dy*(I(pickI)-1);
+        
+        
         if FIRST
             hold on;
             plot(x0,y0,'R*','MarkerSize',100);
@@ -47,8 +64,8 @@ while dx>1e-14
     
     x1=x0-2*exp(-zm/20);
     x2=x0+2*exp(-zm/20);
-    y1=y0-1.13*exp(-zm/20);
-    y2=y0+1.13*exp(-zm/20);
+    y1=y0-1.5*exp(-zm/20);
+    y2=y0+1.5*exp(-zm/20);
     x=linspace(x1,x2,xPixel);
     y=linspace(y1,y2,yPixel);
     dx = (x2 - x1) / (xPixel-1);
@@ -77,10 +94,6 @@ while dx>1e-14
     maxGradientMag=max(max(gradientMag));
     meanGradientMag=mean(mean(gradientMag));
     
-    if FIRST  % pick a arbitary point at first time.
-        PICK=1;
-    end
-    
     examedWindowMeangradientMag=mean(mean(gradientMag(yPixel/2-screenExamLength:yPixel/2+screenExamLength,xPixel/2-screenExamLength:xPixel/2+screenExamLength)));
     if examedWindowMeangradientMag<=meanGradientMag*0.5
         PICK=1;
@@ -97,6 +110,14 @@ while dx>1e-14
     
     
     title(['zoom: X ' num2str(dx0/dx)]);
+    if dx<=1e-12;
+        fprintf("x0=%2.15f\ny0=%2.15f\n",x0,y0);
+        close all;
+        error('haha');
+        pause();
+    end
+    
+    
     %     hold on;
     %     plot(x0,y0,'w*','MarkerSize',30);
     %     hold off;
@@ -108,21 +129,21 @@ while dx>1e-14
     colorbar;
     axis equal;
     axis tight
-    F(frame)=getframe(gcf);
+    %     F(frame)=getframe(gcf);
     frame=frame+1;
-    zm=zm+1.2;
+    zm=zm+1;
     pause(0);
 end
 
-F=[F(1:end) F(end:-1:1)];
-outputVideo = VideoWriter('haha.avi');
-outputVideo.FrameRate =8;
-open(outputVideo);
-for i=1:length(F)
-    i/length(F)*100
-    writeVideo(outputVideo,F(i).cdata);
-end
-close(outputVideo)
+% F=[F(1:end) F(end:-1:1)];
+% outputVideo = VideoWriter('haha.avi');
+% outputVideo.FrameRate =8;
+% open(outputVideo);
+% for i=1:length(F)
+%     i/length(F)*100
+%     writeVideo(outputVideo,F(i).cdata);
+% end
+% close(outputVideo)
 
 
 
