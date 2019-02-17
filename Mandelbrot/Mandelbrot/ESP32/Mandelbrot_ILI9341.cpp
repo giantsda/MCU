@@ -10,6 +10,7 @@
 #define TFT_CLK 18
 #define TFT_RST 4
 #define TFT_MISO 19
+#define TFT_LED 32
 
 #define double float
 
@@ -100,7 +101,9 @@ setup ()
   tft.setTextSize (2);
   tft.setTextColor (ILI9341_BLACK);
   randomSeed (analogRead (0));
-
+  ledcAttachPin (TFT_LED, 0);
+  ledcSetup (0, 5000, 8);
+  ledcWrite (0, 70);
 }
 double xStore[] =
   { -0.658266142810369, -0.21503361460851339, 0.362563027602331,
@@ -137,12 +140,18 @@ double yStore[] =
 
 char start[] = "This program prints Mandelbrot set,  f(z)=z^2+c, where "
     " z and c are defined in the complex space. The program will zoom in "
-    "a random point until it exceeds the presicion of floating number.";
+    "a random point until it exceeds the presicion of floating number.\n\n"
+    "Made by Chen Shen\n2/15/2019\nchenshen@rams.colostate.edu";
+char second[] =
+    "This board uses 3V input. Using 2 AA battery can last for about 48 hours or use the USB port, but not use both at the same time.\n "
+  "If the program hangs, there is a reset button on the back, Press it will restart the program.\n";
+
 int pickN = 38;
 
 void
 printStart (char* start)
 {
+  tft.fillScreen (ILI9341_WHITE);
   tft.setCursor (0, 0);
   tft.setTextSize (2);
   tft.setTextColor (ILI9341_BLACK);
@@ -151,33 +160,29 @@ printStart (char* start)
     {
       tft.print (start[i]);
       i++;
-      delay (60);
+      delay (30);
     }
-  tft.println ("");
-  tft.println ("");
-  tft.println ("Made by Chen Shen");
-  tft.println ("2/15/2019");
-  tft.println ("chenshen@rams.colostate.edu");
-
+  delay (800);
 }
 
 void
 loop (void)
 {
-  tft.fillScreen (ILI9341_WHITE);
-  printStart (start);
-  delay (5000);
 
+  printStart (start);
+
+  printStart (second);
 // random pick x0 and y0
   int pick = random (pickN);
   x0 = xStore[pick];
   y0c = yStore[pick];
   double dx, dy;
-  int maxIte = 200;
+  int maxIte = 300;
   dx = 1;
 
   char str[50];
   bool FIRST = true;
+  int iterationI = 0;
   double dx0;
   double zm = 1;
   tft.fillScreen (ILI9341_BLACK);
@@ -204,17 +209,17 @@ loop (void)
     tft.setCursor (0, 0);
     sprintf (str, "%5.1f", dx0 / dx);
     tft.print ("Magnification= ");
-    tft.println (str);
+    tft.print (str);
+
+    tft.print (" ");
+    tft.print (zm);
     if (FIRST)
       {
         tft.print ("   pick=");
         tft.print (pick);
         FIRST = false;
       }
-//    tft.print ("x0=");
-//    tft.print (x0, 5);
-//    tft.print ("y0=");
-//    tft.print (y0c, 5);
+
         }
       else if (i == 131 && j == 0)
         {
@@ -241,17 +246,12 @@ loop (void)
       tft.drawPixel (j, i, rgbTo565 (c.r, c.g, c.b));
     }
 
-      zm = zm + 2;
-//      tft.print ("dx=");
-//      tft.print ( dx,5);
-//      tft.print ("dy=");
-//      tft.print (dy,5);
-//      tft.print ("y1c=");
-//      tft.print ( y1c,5);
-//      tft.print ("y2=");
-//      tft.print (y2,5);
-//  delay (5000000000);
+      if (iterationI <= 5)
+  zm = zm + 20;
+      else
+  zm = zm + 5;
 
+      iterationI++;
     }
   tft.setTextSize (3);
   tft.setCursor (0, 50);
@@ -260,4 +260,3 @@ loop (void)
   delay (5000);
 
 }
-
