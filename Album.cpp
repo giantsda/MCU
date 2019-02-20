@@ -41,6 +41,7 @@
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
+#define MYCOLOR  8080ff
 
 Elegoo_TFTLCD tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 // If using the shield, all control and data lines are fixed, and
@@ -90,9 +91,9 @@ setup (void)
   tft.reset ();
   uint16_t identifier = 0x9341;
   tft.begin (identifier);
-  tft.fillScreen (BLUE);
-
-  //Init SD_Card
+  tft.fillScreen (tft.color565 (150, 123, 182));  // Tiffany : 50, 180, 140
+//  delay (1111111111111111);
+				//Init SD_Card
   pinMode (PIN_SD_CS, OUTPUT);
   if (!SD.begin (PIN_SD_CS))
     {
@@ -136,7 +137,8 @@ void
 drawSetense (int randomSentence)
 {
   tft.setCursor (0, 0);
-  tft.setTextColor (RED);
+//  tft.setTextColor (MAGENTA);
+  tft.setTextColor (CYAN);
   tft.setTextSize (2);
   myFile = SD.open ("1.txt");
   char temp[50];
@@ -147,7 +149,7 @@ drawSetense (int randomSentence)
       while (myFile.available ())
 	{
 	  tft.print ((char) myFile.read ());
-	  delay(50);
+	  delay (50);
 	}
       // close the file:
       myFile.close ();
