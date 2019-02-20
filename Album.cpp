@@ -33,10 +33,10 @@
 // (on the 2-row header at the end of the board).
 
 // Assign human-readable names to some common 16-bit color values:
-#define	BLACK   0x0000
-#define	BLUE    0x001F
-#define	RED     0xF800
-#define	GREEN   0x07E0
+#define  BLACK   0x0000
+#define BLUE    0x001F
+#define RED     0xF800
+#define GREEN   0x07E0
 #define CYAN    0x07FF
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
@@ -47,18 +47,13 @@ Elegoo_TFTLCD tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 // a simpler declaration can optionally be used:
 // Elegoo_TFTLCD tft;
 
-#define MAX_BMP         10                      // bmp file num
-#define FILENAME_LEN    20                      // max file name length
+#define MAX_BMP         4                      // bmp file num
 
 const int __Gnbmp_height = 320;                 // bmp hight
 const int __Gnbmp_width = 240;                 // bmp width
 
 unsigned char __Gnbmp_image_offset = 0;        // offset
 
-int __Gnfile_num = 5;                           // num of file
-
-char __Gsbmp_files[5][FILENAME_LEN] =           // add file name here
-      { "flower.bmp", "tiger.bmp", "tree.bmp", "RedRose.bmp", "Penguins.bmp" };
 File bmpFile, root;
 
 /*********************************************/
@@ -74,10 +69,7 @@ void
 plotBmp (char* file);
 void
 printDirectory (File dir, int numTabs);
-void
-setBmpFileNames (File dir, char (*bmpFileNames)[FILENAME_LEN], int bmpFiles);
-int
-bmpFileNumber (File dir);
+
 void
 bmpdraw (File f, int x, int y);
 boolean
@@ -86,8 +78,10 @@ uint16_t
 read16 (File f);
 uint32_t
 read32 (File f);
-
+void
+drawSetense (int randomSentence);
 int bmpFiles;
+File myFile;
 
 void
 setup (void)
@@ -106,30 +100,62 @@ setup (void)
       return;
     }
 
-//  printDirectory (root, 0);
-  root = SD.open ("/");
-  bmpFiles = bmpFileNumber (root);
-  root.close ();
-  Serial.print (bmpFiles);
-  Serial.println (" BMP files found");
-
+  bmpFiles = MAX_BMP;
+  tft.setRotation (1);
   randomSeed (analogRead (0));
+
 }
 
 void
 loop (void)
 {
-  root = SD.open ("/");
-  char bmpFileNames[bmpFiles][FILENAME_LEN];
-  setBmpFileNames (root, bmpFileNames, bmpFiles);
-  root.close ();
   int randomFile;
+  char fileName[10];
   while (1)
     {
-      randomFile = random (bmpFiles);
-      plotBmp (bmpFileNames[randomFile]);
+      randomFile = random (1, bmpFiles);
+      sprintf (fileName, "%d", randomFile);
+      strcat (fileName, ".bmp");
+
+      Serial.println (fileName);
+      int randomSentence = random (40);
+      plotBmp (fileName);
+
+      tft.setCursor (0, 0);
+      tft.setTextColor (WHITE);
+      tft.setTextSize (1);
+      tft.println (fileName);
+
+      drawSetense (22);
+      delay (5000);
     }
 
+}
+
+void
+drawSetense (int randomSentence)
+{
+  tft.setCursor (0, 0);
+  tft.setTextColor (RED);
+  tft.setTextSize (2);
+  myFile = SD.open ("1.txt");
+  char temp[50];
+  if (myFile)
+    {
+      Serial.println ("1.txt:");
+      // read from the file until there's nothing else in it:
+      while (myFile.available ())
+	{
+	  tft.print ((char) myFile.read ());
+	  delay(50);
+	}
+      // close the file:
+      myFile.close ();
+    }
+  else
+    {
+      Serial.println ("error opening test.txt");
+    }
 }
 
 void
@@ -139,6 +165,7 @@ plotBmp (char* file)
   if (!bmpFile)
     {
       Serial.println ("didnt find image");
+      Serial.println (file);
       tft.setTextColor (WHITE);
       tft.setTextSize (1);
       tft.println ("didnt find BMPimage");
@@ -186,62 +213,6 @@ printDirectory (File dir, int numTabs)
 }
 
 void
-setBmpFileNames (File dir, char (*bmpFileNames)[FILENAME_LEN], int bmpFiles)
-{
-  int i = 0;
-  while (true)
-    {
-      File entry = dir.openNextFile ();
-      if (!entry)
-	{
-	  break;
-	}
-      Serial.print (">>>>>>>>>.");
-      Serial.println (entry.name ());
-      if (entry.name ())
-	{
-	  char * ptr;
-	  ptr = strchr (entry.name (), '.');
-	  if (strcmp (ptr, ".BMP") == 0)
-	    {
-	      strcpy (bmpFileNames[i], entry.name ());
-	      i++;
-	      Serial.println ("CPOIED!!!");
-	    }
-	}
-      entry.close ();
-    }
-}
-
-int
-bmpFileNumber (File dir)
-{
-  int numBmpFiles = 0;
-  while (true)
-    {
-      File entry = dir.openNextFile ();
-      if (!entry)
-	{
-	  // no more files
-	  break;
-	}
-
-      if (entry.name ())
-	{
-	  char * ptr;
-	  ptr = strchr (entry.name (), '.');
-	  if (strcmp (ptr, ".BMP") == 0)
-	    {
-	      numBmpFiles++;
-	      Serial.println (entry.name ());
-	    }
-	}
-      entry.close ();
-    }
-  return numBmpFiles;
-}
-
-void
 bmpdraw (File f, int x, int y)
 {
   bmpFile.seek (__Gnbmp_image_offset);
@@ -271,7 +242,7 @@ bmpdraw (File f, int x, int y)
 
 	  for (int m = 0; m < BUFFPIXEL; m++)
 	    {
-	      tft.drawPixel (m + offset_x, i, __color[m]);
+	      tft.drawPixel (i, m + offset_x, __color[m]);
 	    }
 	}
     }
