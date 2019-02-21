@@ -1,8 +1,3 @@
-// IMPORTANT: ELEGOO_TFTLCD LIBRARY MUST BE SPECIFICALLY
-// CONFIGURED FOR EITHER THE TFT SHIELD OR THE BREAKOUT BOARD.
-// SEE RELEVANT COMMENTS IN Elegoo_TFTLCD.h FOR SETUP.
-//Technical support:goodtft@163.com
-
 #include <Elegoo_GFX.h>    // Core graphics library
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
 #include <SD.h>
@@ -19,19 +14,6 @@
 
 #define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
 
-// When using the BREAKOUT BOARD only, use these 8 data lines to the LCD:
-// For the Arduino Uno, Duemilanove, Diecimila, etc.:
-//   D0 connects to digital pin 8  (Notice these are
-//   D1 connects to digital pin 9   NOT in order!)
-//   D2 connects to digital pin 2
-//   D3 connects to digital pin 3
-//   D4 connects to digital pin 4
-//   D5 connects to digital pin 5
-//   D6 connects to digital pin 6
-//   D7 connects to digital pin 7
-// For the Arduino Mega, use digital pins 22 through 29
-// (on the 2-row header at the end of the board).
-
 // Assign human-readable names to some common 16-bit color values:
 #define  BLACK   0x0000
 #define BLUE    0x001F
@@ -43,11 +25,8 @@
 #define WHITE   0xFFFF
 #define MYCOLOR  8080ff
 
-Elegoo_TFTLCD tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
-// If using the shield, all control and data lines are fixed, and
-// a simpler declaration can optionally be used:
-// Elegoo_TFTLCD tft;
-
+Elegoo_TFTLCD
+tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 #define MAX_BMP         4                      // bmp file num
 
 const int __Gnbmp_height = 320;                 // bmp hight
@@ -80,8 +59,11 @@ read16 (File f);
 uint32_t
 read32 (File f);
 void
-drawSetense (int randomSentence);
-int bmpFiles;
+drawSetense (char* fileName, int fontSize, int refreshRate);
+int
+findFileNumber (char* fileType);
+
+int bmpFiles, txtFiles;
 File myFile;
 
 void
@@ -91,56 +73,58 @@ setup (void)
   tft.reset ();
   uint16_t identifier = 0x9341;
   tft.begin (identifier);
-  tft.fillScreen (tft.color565 (150, 123, 182));  // Tiffany : 50, 180, 140
-//  delay (1111111111111111);
-				//Init SD_Card
+  tft.setRotation (2);
+  tft.fillScreen (BLACK);  // Tiffany : 50, 180, 140
+  //Init SD_Card
   pinMode (PIN_SD_CS, OUTPUT);
   if (!SD.begin (PIN_SD_CS))
     {
       Serial.println ("initialization failed!");
       return;
     }
+  drawSetense ("start.txt", 1, 30);
+  bmpFiles = findFileNumber (".BMP");
+  txtFiles = findFileNumber (".TXT");
+  Serial.println (">>>><><>");
+  Serial.println (bmpFiles);
+  Serial.println (txtFiles);
+  randomSeed (
+  analogRead (A5));
 
-  bmpFiles = MAX_BMP;
-  tft.setRotation (1);
-  randomSeed (analogRead (0));
-
-}
-
-void
+} void
 loop (void)
 {
   int randomFile;
   char fileName[10];
   while (1)
     {
-      randomFile = random (1, bmpFiles);
+      randomFile = random (1, bmpFiles - 1);
       sprintf (fileName, "%d", randomFile);
       strcat (fileName, ".bmp");
-
-      Serial.println (fileName);
       int randomSentence = random (40);
+      Serial.println (fileName);
       plotBmp (fileName);
-
-      tft.setCursor (0, 0);
-      tft.setTextColor (WHITE);
-      tft.setTextSize (1);
-      tft.println (fileName);
-
-      drawSetense (22);
+      randomFile = random (txtFiles - 2);  // start.txt and starts form 0;
+      sprintf (fileName, "%d", randomFile);
+      strcat (fileName, ".txt");
+      Serial.println (fileName);
+      if (randomFile >= 66)   // for ASCII Art
+	drawSetense (fileName, 1, 0);
+      else
+	drawSetense (fileName, 1, 50);
       delay (5000);
     }
-
 }
 
 void
-drawSetense (int randomSentence)
+drawSetense (char* fileName, int fontSize, int refreshRate)
 {
   tft.setCursor (0, 0);
-//  tft.setTextColor (MAGENTA);
-  tft.setTextColor (CYAN);
-  tft.setTextSize (2);
-  myFile = SD.open ("1.txt");
+  tft.setTextColor (MAGENTA);
+//  tft.setTextColor (CYAN);
+  tft.setTextSize (fontSize);
+
+  myFile = SD.open (fileName);
   char temp[50];
   if (myFile)
     {
@@ -149,15 +133,17 @@ drawSetense (int randomSentence)
       while (myFile.available ())
 	{
 	  tft.print ((char) myFile.read ());
-	  delay (50);
+	  delay (refreshRate);
 	}
       // close the file:
       myFile.close ();
     }
   else
     {
-      Serial.println ("error opening test.txt");
+      Serial.print ("error opening  ");
+      Serial.println (fileName);
     }
+  myFile.close ();
 }
 
 void
@@ -244,7 +230,7 @@ bmpdraw (File f, int x, int y)
 
 	  for (int m = 0; m < BUFFPIXEL; m++)
 	    {
-	      tft.drawPixel (i, m + offset_x, __color[m]);
+	      tft.drawPixel (m + offset_x, i, __color[m]);
 	    }
 	}
     }
@@ -268,20 +254,14 @@ bmpReadHeader (File f)
 
   // read file size
   tmp = read32 (f);
-  Serial.print ("size 0x");
-  Serial.println (tmp, HEX);
 
   // read and ignore creator bytes
   read32 (f);
 
   __Gnbmp_image_offset = read32 (f);
-  Serial.print ("offset ");
-  Serial.println (__Gnbmp_image_offset, DEC);
 
   // read DIB header
   tmp = read32 (f);
-  Serial.print ("header size ");
-  Serial.println (tmp, DEC);
 
   int bmp_width = read32 (f);
   int bmp_height = read32 (f);
@@ -295,18 +275,11 @@ bmpReadHeader (File f)
     return false;
 
   bmpDepth = read16 (f);
-  Serial.print ("bitdepth ");
-  Serial.println (bmpDepth, DEC);
-
   if (read32 (f) != 0)
     {
       // compression not supported!
       return false;
     }
-
-  Serial.print ("compression ");
-  Serial.println (tmp, DEC);
-
   return true;
 }
 
@@ -338,4 +311,35 @@ read32 (File f)
   d <<= 16;
   d |= b;
   return d;
+}
+
+int
+findFileNumber (char* fileType)
+{
+  root = SD.open ("/");
+  int numBmpFiles = 0;
+  while (true)
+    {
+      File entry = root.openNextFile ();
+      if (!entry)
+	{
+	  // no more files
+	  break;
+	}
+//      Serial.println (entry.name ());
+      if (entry.name ())
+	{
+	  char * ptr;
+	  ptr = strchr (entry.name (), '.');
+	  if (strcmp (ptr, fileType) == 0)
+	    {
+	      numBmpFiles++;
+	      //        Serial.println (entry.name ());
+	    }
+	}
+      entry.close ();
+    }
+  return numBmpFiles;
+  root.close ();
+  delay (9999999999999);
 }
