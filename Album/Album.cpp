@@ -11,7 +11,6 @@
 #define LCD_WR A1 // LCD Write goes to Analog 1
 #define LCD_RD A0 // LCD Read goes to Analog 0
 #define PIN_SD_CS 10 // Elegoo SD shields and modules: pin 10
-
 #define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
 
 // Assign human-readable names to some common 16-bit color values:
@@ -25,8 +24,7 @@
 #define WHITE   0xFFFF
 #define MYCOLOR  8080ff
 
-Elegoo_TFTLCD
-tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+Elegoo_TFTLCD tft (LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 #define MAX_BMP         4                      // bmp file num
 
 const int __Gnbmp_height = 320;                 // bmp hight
@@ -47,8 +45,6 @@ File bmpFile, root;
 
 void
 plotBmp (char* file);
-void
-printDirectory (File dir, int numTabs);
 
 void
 bmpdraw (File f, int x, int y);
@@ -59,7 +55,9 @@ read16 (File f);
 uint32_t
 read32 (File f);
 void
-drawSetense (char* fileName, int fontSize, int refreshRate);
+drawSetense (char* fileName, int fontSize, int refreshRate, uint16_t color =
+BLUE,
+       int startLine = 80);
 int
 findFileNumber (char* fileType);
 
@@ -69,6 +67,7 @@ File myFile;
 void
 setup (void)
 {
+  randomSeed (analogRead (A5));
   Serial.begin (9600);
   tft.reset ();
   uint16_t identifier = 0x9341;
@@ -82,59 +81,88 @@ setup (void)
       Serial.println ("initialization failed!");
       return;
     }
-  drawSetense ("start.txt", 1, 30);
-  bmpFiles = findFileNumber (".BMP");
-  txtFiles = findFileNumber (".TXT");
-  Serial.println (">>>><><>");
-  Serial.println (bmpFiles);
-  Serial.println (txtFiles);
-  randomSeed (
-  analogRead (A5));
+  drawSetense (
+      "first.txt", 1, 30,
+      tft.color565 (random (100, 255), random (100, 255), random (100, 255)),
+      0);
+  delay (2000);
+  tft.fillScreen (BLACK);
+  drawSetense (
+      "second.txt", 1, 20,
+      tft.color565 (random (100, 255), random (100, 255), random (100, 255)),
+      0);
+  delay (3000);
 
-} void
+//  bmpFiles = findFileNumber (".BMP");
+//  txtFiles = findFileNumber (".TXT");
+//  Serial.println ("Found BMP and TXT:");
+//  Serial.println (bmpFiles);
+//  Serial.println (txtFiles);
+
+  bmpFiles = 164;
+  txtFiles = 300;
+
+
+
+}
+void
 loop (void)
 {
   int randomFile;
   char fileName[10];
   while (1)
     {
-      randomFile = random (1, bmpFiles - 1);
+      randomFile = random (bmpFiles);
       sprintf (fileName, "%d", randomFile);
       strcat (fileName, ".bmp");
       int randomSentence = random (40);
       Serial.println (fileName);
       plotBmp (fileName);
-      randomFile = random (txtFiles - 2);  // start.txt and starts form 0;
+
+//      tft.fillScreen (BLACK);
+
+// Draw Txt file
+      randomFile = random (txtFiles);  // start.txt and starts form 0;
       sprintf (fileName, "%d", randomFile);
       strcat (fileName, ".txt");
-      Serial.println (fileName);
       if (randomFile >= 66)   // for ASCII Art
-	drawSetense (fileName, 1, 0);
+  drawSetense (
+      fileName,
+      1,
+      20,
+      tft.color565 (random (100, 255), random (100, 255),
+        random (100, 255)),
+      0);
       else
-	drawSetense (fileName, 1, 50);
-      delay (5000);
+  drawSetense (
+      fileName,
+      2,
+      80,
+      tft.color565 (random (100, 255), random (100, 255),
+        random (100, 255)),
+      80);
+      delay (3000);
     }
 }
 
 void
-drawSetense (char* fileName, int fontSize, int refreshRate)
+drawSetense (char* fileName, int fontSize, int refreshRate, uint16_t color =
+BLUE,
+       int startLine)
 {
-  tft.setCursor (0, 0);
-  tft.setTextColor (MAGENTA);
-//  tft.setTextColor (CYAN);
+  tft.setCursor (0, startLine);
+  tft.setTextColor (color);
   tft.setTextSize (fontSize);
-
   myFile = SD.open (fileName);
   char temp[50];
   if (myFile)
     {
-      Serial.println ("1.txt:");
       // read from the file until there's nothing else in it:
       while (myFile.available ())
-	{
-	  tft.print ((char) myFile.read ());
-	  delay (refreshRate);
-	}
+  {
+    tft.print ((char) myFile.read ());
+    delay (refreshRate);
+  }
       // close the file:
       myFile.close ();
     }
@@ -154,18 +182,12 @@ plotBmp (char* file)
     {
       Serial.println ("didnt find image");
       Serial.println (file);
-      tft.setTextColor (WHITE);
-      tft.setTextSize (1);
-      tft.println ("didnt find BMPimage");
       while (1)
-	;
+  ;
     }
   if (!bmpReadHeader (bmpFile))
     {
       Serial.println ("bad bmp");
-      tft.setTextColor (WHITE);
-      tft.setTextSize (1);
-      tft.println ("bad bmp");
       return;
     }
   bmpdraw (bmpFile, 0, 0);
@@ -173,70 +195,35 @@ plotBmp (char* file)
 }
 
 void
-printDirectory (File dir, int numTabs)
-{
-  while (true)
-    {
-      File entry = dir.openNextFile ();
-      if (!entry)
-	{
-	  // no more files
-	  //Serial.println("**nomorefiles**");
-	  break;
-	}
-      Serial.println (entry.name ());
-      if (entry.isDirectory ())
-	{
-	  Serial.println ("/");
-	  printDirectory (entry, numTabs + 1);
-	}
-      else
-	{
-	  // files have sizes, directories do not
-	  Serial.print ("\t\t");
-	  Serial.println (entry.size (), DEC);
-	}
-      entry.close ();
-    }
-}
-
-void
 bmpdraw (File f, int x, int y)
 {
   bmpFile.seek (__Gnbmp_image_offset);
-
   uint32_t time = millis ();
-
-  uint8_t sdbuffer[BUFFPIXEL_X3];                 // 3 * pixels to buffer
-
+  uint8_t sdbuffer[BUFFPIXEL_X3];                // 3 * pixels to buffer
   for (int i = 0; i < __Gnbmp_height; i++)
     {
       for (int j = 0; j < (240 / BUFFPIXEL); j++)
-	{
-	  bmpFile.read (sdbuffer, BUFFPIXEL_X3);
+  {
+    bmpFile.read (sdbuffer, BUFFPIXEL_X3);
 
-	  uint8_t buffidx = 0;
-	  int offset_x = j * BUFFPIXEL;
-	  unsigned int __color[BUFFPIXEL];
+    uint8_t buffidx = 0;
+    int offset_x = j * BUFFPIXEL;
+    unsigned int __color[BUFFPIXEL];
 
-	  for (int k = 0; k < BUFFPIXEL; k++)
-	    {
-	      __color[k] = sdbuffer[buffidx + 2] >> 3;                   // read
-	      __color[k] = __color[k] << 6 | (sdbuffer[buffidx + 1] >> 2); // green
-	      __color[k] = __color[k] << 5 | (sdbuffer[buffidx + 0] >> 3); // blue
+    for (int k = 0; k < BUFFPIXEL; k++)
+      {
+        __color[k] = sdbuffer[buffidx + 2] >> 3;           // read
+        __color[k] = __color[k] << 6 | (sdbuffer[buffidx + 1] >> 2); // green
+        __color[k] = __color[k] << 5 | (sdbuffer[buffidx + 0] >> 3); // blue
+        buffidx += 3;
+      }
 
-	      buffidx += 3;
-	    }
-
-	  for (int m = 0; m < BUFFPIXEL; m++)
-	    {
-	      tft.drawPixel (m + offset_x, i, __color[m]);
-	    }
-	}
+    for (int m = 0; m < BUFFPIXEL; m++)
+      {
+        tft.drawPixel (m + offset_x, i, __color[m]);
+      }
+  }
     }
-
-  Serial.print (millis () - time, DEC);
-  Serial.println (" ms");
 }
 
 boolean
@@ -322,24 +309,23 @@ findFileNumber (char* fileType)
     {
       File entry = root.openNextFile ();
       if (!entry)
-	{
-	  // no more files
-	  break;
-	}
+  {
+    // no more files
+    break;
+  }
 //      Serial.println (entry.name ());
       if (entry.name ())
-	{
-	  char * ptr;
-	  ptr = strchr (entry.name (), '.');
-	  if (strcmp (ptr, fileType) == 0)
-	    {
-	      numBmpFiles++;
-	      //        Serial.println (entry.name ());
-	    }
-	}
+  {
+    char * ptr;
+    ptr = strchr (entry.name (), '.');
+    if (strcmp (ptr, fileType) == 0)
+      {
+        numBmpFiles++;
+        //        Serial.println (entry.name ());
+      }
+  }
       entry.close ();
     }
-  return numBmpFiles;
   root.close ();
-  delay (9999999999999);
+  return numBmpFiles;
 }
