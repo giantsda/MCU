@@ -36,19 +36,19 @@ void
 drawSetense (char* fileName, int fontSize, int refreshRate, uint16_t color =
      ILI9341_RED,
        int startLine = 0);
-
 void
 bmpdraw (File f, int x, int y);
-
 boolean
 bmpReadHeader (File f);
 uint16_t
 read16 (File f);
 uint32_t
 read32 (File f);
-
 uint16_t
 rgbTo565 (uint8_t r, uint8_t g, uint8_t b);
+void
+findFileNumber ();
+
 int bmpFiles, txtFiles;
 File myFile;
 
@@ -58,13 +58,16 @@ setup ()
   randomSeed (analogRead (36));
   Serial.begin (115200);
   Serial.println (F ("TFT LCD test"));
+//  void SPIClass::begin(int8_t sck, int8_t miso, int8_t mosi, int8_t ss)
   SPI.begin (14, 13, 12);
   SPI.setFrequency (40000000);
   tft.begin ();
-  tft.setRotation (2);
+//  tft.setRotation (2);
+
   ledcAttachPin (TFT_LED, 0);
   ledcSetup (0, 5000, 8);
-  ledcWrite (0, 70);
+  ledcWrite (0, 130);
+
   tft.fillScreen (ILI9341_BLACK);
   if (!SD.begin (27))
     Serial.println ("Card Mount Failed");
@@ -81,9 +84,19 @@ setup ()
       "/second.txt", 1, 20,
       tft.color565 (random (100, 255), random (100, 255), random (100, 255)),
       0);
-  delay (3000);
-  bmpFiles = 164;
-  txtFiles = 300;
+//  delay (3000);
+
+  bmpFiles = 0;
+  txtFiles = 0;
+  findFileNumber ();
+  bmpFiles = bmpFiles - 1; // 0 based
+  txtFiles = txtFiles - 1 - 2; // first and second.txt
+  Serial.println ("Found BMP and TXT:");
+  Serial.println (bmpFiles);
+  Serial.println (txtFiles);
+
+//  bmpFiles = 164;
+//  txtFiles = 300;
 
 }
 void
@@ -99,8 +112,8 @@ loop (void)
       int randomSentence = random (40);
       Serial.println (fileName);
       plotBmp (fileName);
-
-//      tft.fillScreen (BLACK);
+      delay (2000);
+      tft.fillScreen (ILI9341_BLACK);
 
 // Draw Txt file
       randomFile = random (txtFiles);  // start.txt and starts form 0;
@@ -109,7 +122,7 @@ loop (void)
       Serial.println (fileName);
       if (randomFile >= 66)   // for ASCII Art
   drawSetense (
-      fileName, 1, 20,
+      fileName, 1, 10,
       rgbTo565 (random (100, 255), random (100, 255), random (100, 255)),
       0);
       else
@@ -117,7 +130,7 @@ loop (void)
       fileName, 2, 80,
       rgbTo565 (random (100, 255), random (100, 255), random (100, 255)),
       80);
-      delay (3000);
+      delay (2000);
     }
 }
 
@@ -280,3 +293,48 @@ rgbTo565 (uint8_t r, uint8_t g, uint8_t b)
 {
   return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3);
 }
+
+void
+findFileNumber ()
+{
+  tft.setTextColor (ILI9341_WHITE);
+  tft.setTextSize (2);
+  tft.setCursor (0, 0);
+  tft.fillRect (0, 0, 200, 18, ILI9341_BLACK);
+  tft.print ("scanning...");
+  root = SD.open ("/");
+  int numBmpFiles = 0;
+  while (true)
+    {
+      tft.fillRect (120, 0, 240, 18, ILI9341_BLACK);
+      tft.setCursor (120, 0);
+      File entry = root.openNextFile ();
+      if (!entry)
+  {
+    // no more files
+    break;
+  }
+
+      if (entry.name ())
+  {
+    Serial.println (entry.name ());
+    if (!entry.isDirectory ())
+      tft.println (entry.name ());
+
+    char * ptr;
+    ptr = strchr (entry.name (), '.');
+    if (strcmp (ptr, ".txt") == 0)
+      {
+        txtFiles++;
+      }
+    else if (strcmp (ptr, ".bmp") == 0)
+      {
+        bmpFiles++;
+
+      }
+  }
+      entry.close ();
+    }
+  root.close ();
+}
+
