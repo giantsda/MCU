@@ -23,6 +23,8 @@ File myFile;
 /* flowMeter variables*/
 volatile int pulseCount;
 unsigned long oldTime;
+volatile unsigned long oldTimeForInterrupt;
+
 double currentRPM;
 double averagedRPM;
 
@@ -60,7 +62,7 @@ setup ()
 
   pinMode (Sensor, INPUT);  // sets the digital pin as input
   pulseCount = 0;
-  oldTime = 0;
+  oldTimeForInterrupt=0;
 
   attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, CHANGE);
   int val = 0;
@@ -69,13 +71,11 @@ setup ()
 
 //  while (1)
 //    {
-//      tft.fillRect (0, 20, 50, 50, ILI9341_BLUE);
-//      tft.setCursor (0, 20);
-//
 //      val = digitalRead (Sensor);   // read the input pin
 //      tft.println (val);
 //    }
-  oldTime = millis ();
+  oldTime = micros ();
+  oldTimeForInterrupt= micros ();
 }
 void
 loop (void)
@@ -83,23 +83,22 @@ loop (void)
 
 //  Serial.println (micros());
 
-  if ((millis () - oldTime) >= 1000)
+  if ((micros () - oldTime) >= 1000000)
     {
       detachInterrupt (digitalPinToInterrupt (Sensor)); // Detached it to do stuff
       double t = millis () - oldTime;
+      currentRPM = pulseCount / 6. * 60; // /6 if using CHANGE and then *60 since there are 60 seconds/min
       Serial.println (pulseCount);
-      pulseCount = 0;
-      oldTime = millis ();
 
+      /* Restart Interrupt */
+      pulseCount = 0;
+      oldTime = micros ();
       attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, CHANGE);
     }
 
-
-
-
-  ////      tft.fillRect (0, 20, 320, 80, ILI9341_BLUE);
-////      tft.setCursor (0, 20);
-////      tft.println (t);
+  tft.fillRect (0, 20, 320, 80, ILI9341_BLUE);
+  tft.setCursor (0, 20);
+  tft.println (currentRPM);
 //      Serial.print (t, 15);
 //      Serial.print ("         ");
 //      add += t;
