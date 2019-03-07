@@ -21,15 +21,16 @@ File file, root;
 File myFile;
 
 /* flowMeter variables*/
-volatile int pulseCount;
-unsigned long oldTime;
+volatile int interruptCount;
+unsigned long oldTime, startTime;
 volatile unsigned long oldTimeForInterrupt;
-volatile double currentRPM, sumRPM, averageRPM;
+volatile double currentRPM, sumRPMInterrupt, RPM_1s;
 volatile double timeSpan = 0.;
+unsigned int loopCount;
 
-double averagedRPM;
-
+double averagedRPM, sumRPMLoop;
 double add = 0.;
+int x, y;
 
 void
 pulseCounter ();
@@ -49,7 +50,7 @@ setup ()
   if (!SD.begin (27))
     Serial.println ("Card Mount Failed");
   else
-    Serial.println ("Card SUCCESS");
+    Serial.println ("Card Mount SUCCESS");
 
   ledcAttachPin (TFT_LED, 0);
   ledcSetup (0, 5000, 8);
@@ -61,18 +62,27 @@ setup ()
   tft.setTextSize (2);
 
   pinMode (Sensor, INPUT);  // sets the digital pin as input
-  pulseCount = 0;
+  interruptCount = 0;
   oldTimeForInterrupt = 0;
-  sumRPM = 0.;
+  sumRPMInterrupt = 0.;
   currentRPM = 0.;
-  averageRPM = 0.;
+  RPM_1s = 0.;
+  loopCount = 0;
+  sumRPMLoop = 0.;
 
   tft.println ("flowMeter started");
-  tft.setTextSize (10);
+  tft.println ("--------------------------");
+  tft.print ("RPM_1s=: ");
+  tft.setTextSize (4);
 
-  Serial.println (F ("FlowMeter Started"));
+  x = tft.getCursorX ();
+  y = tft.getCursorY ();
+
+  Serial.println ("FlowMeter Started");
+  Serial.println ("/*----------------------------*/");
   oldTime = micros ();
   oldTimeForInterrupt = micros ();
+  startTime = millis ();
   attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, FALLING);
 }
 void
@@ -80,16 +90,31 @@ loop (void)
 {
 // Serial.println (currentRPM);
 
-  if ((micros () - oldTime) >= 200000)
+  if ((micros () - oldTime) >= 1000000)
     {
       detachInterrupt (digitalPinToInterrupt (Sensor)); // Detached it to do stuff
-      Serial.print (currentRPM);
-      Serial.print (" << ");
-      Serial.println (averageRPM);
+      loopCount++;
+      sumRPMLoop += RPM_1s;
+      averagedRPM = sumRPMLoop / loopCount;
+      Serial.print ("Time:");
+      Serial.print ((millis () - startTime) / 1000., 3); // seconds
+      Serial.print ("  RPM_1s:");
+      Serial.print (RPM_1s);
+      Serial.print ("  averagedRPM:");
+      Serial.println (averagedRPM);
+
+      tft.fillRect (x, y, 220, 30, ILI9341_RED);
+      tft.setCursor (x, y);
+      tft.print (RPM_1s, 0);
+      if (RPM_1s == 0)
+  {
+    tft.print (" STUCK!");
+  }
+
       /* Restart Interrupt */
-      pulseCount = 0;
-      sumRPM = 0.;
-      averageRPM = 0.;
+      interruptCount = 0;
+      sumRPMInterrupt = 0.;
+      RPM_1s = 0.;
       oldTime = micros ();
       attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, FALLING);
     }
@@ -103,12 +128,19 @@ pulseCounter ()
   timeSpan = timeSpan / 1000000.; //Convert it to seconds;
   currentRPM = 60 / timeSpan / 3; // Took 3 Falling to complete 1 revolution and there are 60 seconds/minite
   /* average RPM */
-  pulseCount++;
-  sumRPM += currentRPM;
-  averageRPM = sumRPM / pulseCount;
-
-//  Serial.print (timeSpan, 10);
-//  Serial.print ("  ");
-//  Serial.println (currentRPM, 10);
+  interruptCount++;
+  if (interruptCount > 1) // The first reading is not accurate because it may spend a long time in loop.
+    {
+      sumRPMInterrupt += currentRPM;
+      RPM_1s = sumRPMInterrupt / (interruptCount - 1);
+      Serial.print ("Time:");
+      Serial.print ((millis () - startTime) / 1000., 3); // seconds
+      Serial.print ("  pulseCount:");
+      Serial.print (interruptCount);
+      Serial.print ("  currentRPM:");
+      Serial.print (currentRPM, 5);
+      Serial.print ("  RPM_1s:");
+      Serial.println (RPM_1s, 5);
+    }
 }
 

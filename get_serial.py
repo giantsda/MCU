@@ -17,7 +17,7 @@ while(ser.isOpen()):
 	# print(ser.read(82).decode('utf-8'),end="", flush=True)
 	line=ser.readline()
 	line=line.decode('utf-8')
-	if i>=3:
+	if i>=0:
 		print(line,end="", flush=True)   # start to wrtie data from the third line
 	i=i+1	
 
