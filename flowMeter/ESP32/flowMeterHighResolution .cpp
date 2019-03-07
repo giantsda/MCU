@@ -24,8 +24,8 @@ File myFile;
 volatile int pulseCount;
 unsigned long oldTime;
 volatile unsigned long oldTimeForInterrupt;
-volatile double currentRPM;
-volatile double timeSpan;
+volatile double currentRPM, sumRPM, averageRPM;
+volatile double timeSpan = 0.;
 
 double averagedRPM;
 
@@ -63,60 +63,52 @@ setup ()
   pinMode (Sensor, INPUT);  // sets the digital pin as input
   pulseCount = 0;
   oldTimeForInterrupt = 0;
+  sumRPM = 0.;
+  currentRPM = 0.;
+  averageRPM = 0.;
 
-  attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, FALLING);
-  int val = 0;
   tft.println ("flowMeter started");
   tft.setTextSize (10);
-
-//  while (1)
-//    {
-//      val = digitalRead (Sensor);   // read the input pin
-//      tft.println (val);
-//    }
 
   Serial.println (F ("FlowMeter Started"));
   oldTime = micros ();
   oldTimeForInterrupt = micros ();
+  attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, FALLING);
 }
 void
 loop (void)
 {
-//  Serial.print (micros ());
-//  Serial.print ("   ");
-//  Serial.println (millis ());
+// Serial.println (currentRPM);
 
-//  if ((micros () - oldTime) >= 1000000)
-//    {
-//      detachInterrupt (digitalPinToInterrupt (Sensor)); // Detached it to do stuff
-//      double t = millis () - oldTime;
-//      currentRPM = pulseCount / 6. * 60; // /6 if using CHANGE and then *60 since there are 60 seconds/min
-//      Serial.print (oldTimeForInterrupt);
-//      Serial.print ("  ");
-//      Serial.print (micros());
-//      Serial.println (currentRPM);
-  /* Restart Interrupt */
-//      pulseCount = 0;
-//      oldTime = micros ();
-//      attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, CHANGE);
-//    }
-//  tft.fillRect (0, 20, 320, 80, ILI9341_BLUE);
-//  tft.setCursor (0, 20);
-//  tft.println (timeSpan);
+  if ((micros () - oldTime) >= 200000)
+    {
+      detachInterrupt (digitalPinToInterrupt (Sensor)); // Detached it to do stuff
+      Serial.print (currentRPM);
+      Serial.print (" << ");
+      Serial.println (averageRPM);
+      /* Restart Interrupt */
+      pulseCount = 0;
+      sumRPM = 0.;
+      averageRPM = 0.;
+      oldTime = micros ();
+      attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, FALLING);
+    }
 }
 
 void
 pulseCounter ()
 {
-  Serial.print (oldTimeForInterrupt);
-  Serial.print ("  ");
-  Serial.print (micros ());
-  Serial.print ("  ");
-  timeSpan = (micros () - oldTimeForInterrupt) / 1000000.; //Convert it to seconds;
-  Serial.print (timeSpan, 10);
-  currentRPM = 60 / timeSpan / 3;
-  Serial.print ("  ");
-  Serial.println (currentRPM, 10);
-  oldTimeForInterrupt = micros ();
+  timeSpan = (micros () - oldTimeForInterrupt);
+  oldTimeForInterrupt = micros (); // we are measuring start to start time span, we need to save oldTime as soon as possible or currentRPM is going to be larger.
+  timeSpan = timeSpan / 1000000.; //Convert it to seconds;
+  currentRPM = 60 / timeSpan / 3; // Took 3 Falling to complete 1 revolution and there are 60 seconds/minite
+  /* average RPM */
+  pulseCount++;
+  sumRPM += currentRPM;
+  averageRPM = sumRPM / pulseCount;
+
+//  Serial.print (timeSpan, 10);
+//  Serial.print ("  ");
+//  Serial.println (currentRPM, 10);
 }
 

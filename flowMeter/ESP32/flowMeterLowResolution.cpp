@@ -88,7 +88,7 @@ loop (void)
       detachInterrupt (digitalPinToInterrupt (Sensor)); // Detached it to do stuff
       double t = millis () - oldTime;
       currentRPM = pulseCount / 6. * 60; // /6 if using CHANGE and then *60 since there are 60 seconds/min
-      Serial.println (pulseCount);
+      Serial.println (currentRPM);
 
       /* Restart Interrupt */
       pulseCount = 0;
@@ -96,20 +96,10 @@ loop (void)
       attachInterrupt (digitalPinToInterrupt (Sensor), pulseCounter, CHANGE);
     }
 
-  tft.fillRect (0, 20, 320, 80, ILI9341_BLUE);
-  tft.setCursor (0, 20);
-  tft.println (currentRPM);
-//      Serial.print (t, 15);
-//      Serial.print ("         ");
-//      add += t;
-//      Serial.println (add, 15);
-//
-//      oldTime = millis ();
-//  Serial.println ("begin");
 //  tft.fillRect (0, 20, 320, 80, ILI9341_BLUE);
 //  tft.setCursor (0, 20);
-//
-//  int val = digitalRead (Sensor);   // read the input pin
+//  tft.println (currentRPM);
+
 
 }
 
@@ -119,4 +109,3 @@ pulseCounter ()
   // Increment the pulse counter
   pulseCount++;
 }
-
