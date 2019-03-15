@@ -14,7 +14,7 @@
 #define Sensor 33
 Adafruit_ILI9341 tft = Adafruit_ILI9341 (TFT_CS, TFT_DC, TFT_MOSI, TFT_CLK,
 TFT_RST,
-           TFT_MISO);
+					 TFT_MISO);
 const int __Gnbmp_height = 320;                 // bmp hight
 const int __Gnbmp_width = 240;                 // bmp width
 File file, root;
@@ -107,9 +107,13 @@ loop (void)
       tft.setCursor (x, y);
       tft.print (RPM_1s, 0);
       if (RPM_1s == 0)
-  {
-    tft.print (" STUCK!");
-  }
+	{
+	  tft.print (" STUCK!");
+	}
+
+      tft.fillRect (x, y, 220, 30, ILI9341_RED);
+      tft.setCursor (x, y);
+      tft.print (RPM_1s, 0);
 
       /* Restart Interrupt */
       interruptCount = 0;
@@ -133,14 +137,14 @@ pulseCounter ()
     {
       sumRPMInterrupt += currentRPM;
       RPM_1s = sumRPMInterrupt / (interruptCount - 1);
-      Serial.print ("Time:");
-      Serial.print ((millis () - startTime) / 1000., 3); // seconds
-      Serial.print ("  pulseCount:");
-      Serial.print (interruptCount);
-      Serial.print ("  currentRPM:");
-      Serial.print (currentRPM, 5);
-      Serial.print ("  RPM_1s:");
-      Serial.println (RPM_1s, 5);
+//      Serial.print ("Time:");
+//      Serial.print ((millis () - startTime) / 1000., 3); // seconds
+//      Serial.print ("  pulseCount:");
+//      Serial.print (interruptCount);
+//      Serial.print ("  currentRPM:");
+//      Serial.print (currentRPM, 5);
+//      Serial.print ("  RPM_1s:");
+//      Serial.println (RPM_1s, 5);
     }
 }
 
