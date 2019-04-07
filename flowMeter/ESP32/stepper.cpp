@@ -1,44 +1,33 @@
+
+#include <chenStepper.h>
 const int ena = 4;
 const int dir = 5;
 const int pul = 14;
-int speed;
-int N;
+chenStepper stepper;  
 
-void
-setup ()
-{
-  Serial.begin (9600);
-  pinMode (ena, OUTPUT);
-  pinMode (dir, OUTPUT);
-  pinMode (pul, OUTPUT);
-  digitalWrite (ena, LOW);
-  digitalWrite (dir, HIGH);
-  digitalWrite (pul, HIGH);
+void setup()
+{  
+  Serial.begin(115200);
 }
 
-void
-loop ()
-{
-  speed = 350;
-  while (speed > -1)
-  {
-    if (speed > 100)
-    N = 20;
-    else if (speed > 40)
-    N = 200;
-    else if (speed > 20)
-    N = 8000;
-    for (int i = 0; i < N; i++)
-    {
-      digitalWrite (pul, HIGH); //atribui o novo estado à porta
-      delayMicroseconds (speed);
-      digitalWrite (pul, LOW); //atribui o novo estado à porta
-      delayMicroseconds (speed);
-    }
-    if (speed > 27)
-    {
-//      Serial.println(speed);
-      speed = speed - 1;
-    }
-  }
+void loop()
+{  
+
+int high=1200,low=200;
+int steps1=stepper.findAccelerationSteps(high,low);
+int delay1[steps1];
+stepper.getDelayArray(high,low,steps1, delay1);
+
+stepper.Accelerate (delay1,steps1);
+stepper.moveI(low,2000-steps1*2);
+stepper.Deaccelerate (delay1,steps1);
+
+//for (int i=0;i<steps2;i++)
+//{
+//Serial.print(i);
+//Serial.print(":  ");
+//Serial.println(delay2[i]);
+//}
+
+  delay(200);
 }
