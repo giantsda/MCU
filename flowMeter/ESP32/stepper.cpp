@@ -45,7 +45,7 @@ setup ()
 void
 loop ()
 {
-  totalLength = 4100;
+  totalLength = 3600;
   high = 1500;
   low =  100;   // velocity==149.8445/speed m/s
 
