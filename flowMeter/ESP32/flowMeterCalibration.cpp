@@ -51,7 +51,7 @@ loop ()
   high = 1500;
 //  low =  149.8445/1.5;   // velocity==149.8445/speed m/s
 delay (10000);
- for (double velocity=0.05;velocity<1.5;velocity=velocity+0.0125)
+ for (double velocity=0.05;velocity<1.0;velocity=velocity+0.0125)
   {
     low=149.8445/velocity;
     delay (3000);
@@ -70,7 +70,7 @@ delay (10000);
 
 // go back
     digitalWrite (dir, LOW);
-    delay (5000);
+    delay (3000);
     Serial.println ("Back start");
     stepper.moveI (700, totalLength);
     Serial.println ("Back end");
