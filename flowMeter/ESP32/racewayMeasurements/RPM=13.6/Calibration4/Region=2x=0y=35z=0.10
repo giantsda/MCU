@@ -1,0 +1,323 @@
+Card Mount SUCCESS
+FlowMeter Started
+/*----------------------------*/
+Time:0.742  pulseCount:2  currentRPM:32.44646  RPM_1s:32.44646
+Time_:1.000  RPM_1s:32.45  averagedRPM:32.45
+Time_:2.195  RPM_1s:0.00  averagedRPM:16.22
+Time:2.807  pulseCount:2  currentRPM:74.61851  RPM_1s:74.61851
+Time:3.060  pulseCount:3  currentRPM:78.93781  RPM_1s:76.77816
+Time:3.169  pulseCount:4  currentRPM:184.81214  RPM_1s:112.78949
+Time:3.250  pulseCount:5  currentRPM:244.80403  RPM_1s:145.79312
+Time:3.346  pulseCount:6  currentRPM:208.55492  RPM_1s:158.34548
+Time_:3.406  RPM_1s:158.35  averagedRPM:63.60
+Time:3.946  pulseCount:2  currentRPM:79.56399  RPM_1s:79.56399
+Time:4.071  pulseCount:3  currentRPM:159.88105  RPM_1s:119.72252
+Time:4.166  pulseCount:4  currentRPM:211.53724  RPM_1s:150.32743
+Time:4.275  pulseCount:5  currentRPM:182.86550  RPM_1s:158.46195
+Time:4.451  pulseCount:6  currentRPM:113.81161  RPM_1s:149.53188
+Time_:4.609  RPM_1s:149.53  averagedRPM:85.08
+Time_:5.814  RPM_1s:0.00  averagedRPM:68.06
+Time_:7.025  RPM_1s:0.00  averagedRPM:56.72
+Time_:8.236  RPM_1s:0.00  averagedRPM:48.62
+Time:8.771  pulseCount:2  currentRPM:107.82369  RPM_1s:107.82369
+Time:8.906  pulseCount:3  currentRPM:147.89290  RPM_1s:127.85829
+Time:9.012  pulseCount:4  currentRPM:188.18039  RPM_1s:147.96566
+Time:9.174  pulseCount:5  currentRPM:123.68966  RPM_1s:141.89666
+Time_:9.447  RPM_1s:141.90  averagedRPM:60.28
+Time:10.041  pulseCount:2  currentRPM:84.99896  RPM_1s:84.99896
+Time:10.185  pulseCount:3  currentRPM:138.33172  RPM_1s:111.66534
+Time:10.299  pulseCount:4  currentRPM:176.03154  RPM_1s:133.12074
+Time:10.384  pulseCount:5  currentRPM:235.41044  RPM_1s:158.69317
+Time:10.483  pulseCount:6  currentRPM:201.35512  RPM_1s:167.22556
+Time:10.592  pulseCount:7  currentRPM:183.27102  RPM_1s:169.89980
+Time_:10.648  RPM_1s:169.90  averagedRPM:72.46
+Time:10.908  pulseCount:2  currentRPM:359.05998  RPM_1s:359.05998
+Time:10.966  pulseCount:3  currentRPM:343.38891  RPM_1s:351.22444
+Time:11.020  pulseCount:4  currentRPM:374.01354  RPM_1s:358.82081
+Time:11.081  pulseCount:5  currentRPM:329.51101  RPM_1s:351.49336
+Time:11.155  pulseCount:6  currentRPM:270.55545  RPM_1s:335.30578
+Time:11.223  pulseCount:7  currentRPM:294.11765  RPM_1s:328.44109
+Time:11.308  pulseCount:8  currentRPM:234.33747  RPM_1s:314.99771
+Time:11.439  pulseCount:9  currentRPM:152.08894  RPM_1s:294.63412
+Time_:11.849  RPM_1s:294.63  averagedRPM:94.68
+Time:12.686  pulseCount:2  currentRPM:62.95445  RPM_1s:62.95445
+Time:12.832  pulseCount:3  currentRPM:137.26459  RPM_1s:100.10952
+Time:12.991  pulseCount:4  currentRPM:126.20845  RPM_1s:108.80916
+Time_:13.055  RPM_1s:108.81  averagedRPM:95.96
+Time_:14.259  RPM_1s:0.00  averagedRPM:87.96
+Time:14.953  pulseCount:2  currentRPM:61.33502  RPM_1s:61.33502
+Time:15.188  pulseCount:3  currentRPM:85.23296  RPM_1s:73.28399
+Time_:15.470  RPM_1s:73.28  averagedRPM:86.83
+Time_:16.662  RPM_1s:0.00  averagedRPM:80.63
+Time:16.958  pulseCount:2  currentRPM:241.99598  RPM_1s:241.99598
+Time:17.021  pulseCount:3  currentRPM:317.91953  RPM_1s:279.95776
+Time:17.082  pulseCount:4  currentRPM:325.01300  RPM_1s:294.97617
+Time:17.160  pulseCount:5  currentRPM:256.31824  RPM_1s:285.31169
+Time:17.271  pulseCount:6  currentRPM:181.58377  RPM_1s:264.56611
+Time:17.467  pulseCount:7  currentRPM:101.70405  RPM_1s:237.42243
+Time:17.628  pulseCount:8  currentRPM:124.32476  RPM_1s:221.26562
+Time:17.839  pulseCount:9  currentRPM:95.00872  RPM_1s:205.48351
+Time_:17.873  RPM_1s:205.48  averagedRPM:88.96
+Time:18.189  pulseCount:2  currentRPM:258.67867  RPM_1s:258.67867
+Time:18.270  pulseCount:3  currentRPM:246.24477  RPM_1s:252.46172
+Time:18.360  pulseCount:4  currentRPM:222.41498  RPM_1s:242.44614
+Time:18.461  pulseCount:5  currentRPM:198.16303  RPM_1s:231.37536
+Time:18.608  pulseCount:6  currentRPM:136.30199  RPM_1s:212.36069
+Time:18.713  pulseCount:7  currentRPM:190.83423  RPM_1s:208.77294
+Time:18.772  pulseCount:8  currentRPM:337.23401  RPM_1s:227.12453
+Time:18.818  pulseCount:9  currentRPM:438.75044  RPM_1s:253.57776
+Time:18.859  pulseCount:10  currentRPM:482.32287  RPM_1s:278.99389
+Time:18.905  pulseCount:11  currentRPM:438.70232  RPM_1s:294.96473
+Time:18.959  pulseCount:12  currentRPM:364.41821  RPM_1s:301.27868
+Time:19.010  pulseCount:13  currentRPM:395.67136  RPM_1s:309.14474
+Time:19.056  pulseCount:14  currentRPM:431.83487  RPM_1s:318.58244
+Time_:19.081  RPM_1s:318.58  averagedRPM:103.31
+Time:19.403  pulseCount:2  currentRPM:295.12890  RPM_1s:295.12890
+Time:19.530  pulseCount:3  currentRPM:157.02655  RPM_1s:226.07772
+Time_:20.283  RPM_1s:226.08  averagedRPM:110.53
+Time_:21.488  RPM_1s:0.00  averagedRPM:104.39
+Time:22.655  pulseCount:2  currentRPM:29.93999  RPM_1s:29.93999
+Time_:22.699  RPM_1s:29.94  averagedRPM:100.47
+Time:23.783  pulseCount:2  currentRPM:47.91383  RPM_1s:47.91383
+Time:23.871  pulseCount:3  currentRPM:227.17721  RPM_1s:137.54552
+Time_:23.897  RPM_1s:137.55  averagedRPM:102.32
+Time:24.353  pulseCount:2  currentRPM:119.99184  RPM_1s:119.99184
+Time:24.447  pulseCount:3  currentRPM:212.87239  RPM_1s:166.43212
+Time:24.544  pulseCount:4  currentRPM:207.57224  RPM_1s:180.14549
+Time:24.621  pulseCount:5  currentRPM:256.66692  RPM_1s:199.27585
+Time:24.684  pulseCount:6  currentRPM:319.85670  RPM_1s:223.39202
+Time:24.758  pulseCount:7  currentRPM:268.79914  RPM_1s:230.95987
+Time:24.861  pulseCount:8  currentRPM:195.57607  RPM_1s:225.90504
+Time:24.949  pulseCount:9  currentRPM:225.46135  RPM_1s:225.84958
+Time:25.082  pulseCount:10  currentRPM:151.23102  RPM_1s:217.55863
+Time_:25.099  RPM_1s:217.56  averagedRPM:107.81
+Time:25.422  pulseCount:2  currentRPM:260.20322  RPM_1s:260.20322
+Time:25.499  pulseCount:3  currentRPM:259.74363  RPM_1s:259.97343
+Time:25.599  pulseCount:4  currentRPM:200.22626  RPM_1s:240.05770
+Time:25.673  pulseCount:5  currentRPM:270.96599  RPM_1s:247.78478
+Time:25.739  pulseCount:6  currentRPM:300.94648  RPM_1s:258.41712
+Time:25.820  pulseCount:7  currentRPM:248.32690  RPM_1s:256.73541
+Time:25.905  pulseCount:8  currentRPM:235.80457  RPM_1s:253.74529
+Time:25.997  pulseCount:9  currentRPM:217.07042  RPM_1s:249.16093
+Time:26.110  pulseCount:10  currentRPM:177.64198  RPM_1s:241.21438
+Time:26.204  pulseCount:11  currentRPM:210.79702  RPM_1s:238.17265
+Time:26.291  pulseCount:12  currentRPM:231.06161  RPM_1s:237.52619
+Time_:26.301  RPM_1s:237.53  averagedRPM:113.71
+Time:27.441  pulseCount:2  currentRPM:24.75143  RPM_1s:24.75143
+Time_:27.507  RPM_1s:24.75  averagedRPM:109.84
+Time:28.043  pulseCount:2  currentRPM:173.38836  RPM_1s:173.38836
+Time:28.133  pulseCount:3  currentRPM:221.13375  RPM_1s:197.26105
+Time:28.250  pulseCount:4  currentRPM:171.84197  RPM_1s:188.78803
+Time_:28.704  RPM_1s:188.79  averagedRPM:113.13
+Time:29.872  pulseCount:2  currentRPM:49.45439  RPM_1s:49.45439
+Time_:29.906  RPM_1s:49.45  averagedRPM:110.58
+Time:30.390  pulseCount:2  currentRPM:106.24621  RPM_1s:106.24621
+Time:30.651  pulseCount:3  currentRPM:76.37640  RPM_1s:91.31131
+Time:30.751  pulseCount:4  currentRPM:200.74879  RPM_1s:127.79047
+Time:30.846  pulseCount:5  currentRPM:210.21873  RPM_1s:148.39753
+Time:30.970  pulseCount:6  currentRPM:161.04616  RPM_1s:150.92726
+Time:31.072  pulseCount:7  currentRPM:196.92017  RPM_1s:158.59274
+Time_:31.101  RPM_1s:158.59  averagedRPM:112.43
+Time:31.387  pulseCount:2  currentRPM:251.79403  RPM_1s:251.79403
+Time:31.465  pulseCount:3  currentRPM:255.65640  RPM_1s:253.72522
+Time:31.530  pulseCount:4  currentRPM:310.26512  RPM_1s:272.57185
+Time:31.615  pulseCount:5  currentRPM:235.26644  RPM_1s:263.24550
+Time:31.736  pulseCount:6  currentRPM:165.73578  RPM_1s:243.74356
+Time:31.850  pulseCount:7  currentRPM:175.21113  RPM_1s:232.32148
+Time:31.962  pulseCount:8  currentRPM:178.06585  RPM_1s:224.57068
+Time:32.046  pulseCount:9  currentRPM:239.67596  RPM_1s:226.45884
+Time:32.111  pulseCount:10  currentRPM:304.27969  RPM_1s:235.10560
+Time:32.174  pulseCount:11  currentRPM:316.54585  RPM_1s:243.24963
+Time:32.238  pulseCount:12  currentRPM:314.99039  RPM_1s:249.77151
+Time_:32.304  RPM_1s:249.77  averagedRPM:117.52
+Time_:33.512  RPM_1s:0.00  averagedRPM:113.32
+Time:34.107  pulseCount:2  currentRPM:117.57513  RPM_1s:117.57513
+Time:34.316  pulseCount:3  currentRPM:95.88601  RPM_1s:106.73057
+Time:34.574  pulseCount:4  currentRPM:77.53621  RPM_1s:96.99912
+Time:34.705  pulseCount:5  currentRPM:152.73938  RPM_1s:110.93418
+Time_:34.723  RPM_1s:110.93  averagedRPM:113.24
+Time:35.096  pulseCount:2  currentRPM:130.18969  RPM_1s:130.18969
+Time:35.190  pulseCount:3  currentRPM:212.46986  RPM_1s:171.32977
+Time:35.276  pulseCount:4  currentRPM:233.33956  RPM_1s:191.99970
+Time:35.422  pulseCount:5  currentRPM:137.10650  RPM_1s:178.27640
+Time:35.635  pulseCount:6  currentRPM:93.80951  RPM_1s:161.38302
+Time:35.877  pulseCount:7  currentRPM:82.68255  RPM_1s:148.26628
+Time_:35.918  RPM_1s:148.27  averagedRPM:114.40
+Time:36.878  pulseCount:2  currentRPM:26.38237  RPM_1s:26.38237
+Time:37.042  pulseCount:3  currentRPM:122.19636  RPM_1s:74.28936
+Time_:37.119  RPM_1s:74.29  averagedRPM:113.11
+Time:37.435  pulseCount:2  currentRPM:225.42323  RPM_1s:225.42323
+Time:37.524  pulseCount:3  currentRPM:226.53135  RPM_1s:225.97729
+Time:37.605  pulseCount:4  currentRPM:247.18212  RPM_1s:233.04557
+Time:37.677  pulseCount:5  currentRPM:275.60357  RPM_1s:243.68507
+Time:37.748  pulseCount:6  currentRPM:280.51278  RPM_1s:251.05061
+Time:37.819  pulseCount:7  currentRPM:284.00619  RPM_1s:256.54321
+Time:37.886  pulseCount:8  currentRPM:296.74911  RPM_1s:262.28691
+Time:38.010  pulseCount:9  currentRPM:162.31790  RPM_1s:249.79078
+Time_:38.311  RPM_1s:249.79  averagedRPM:117.38
+Time:38.866  pulseCount:2  currentRPM:88.89719  RPM_1s:88.89719
+Time:39.273  pulseCount:3  currentRPM:49.04702  RPM_1s:68.97210
+Time:39.447  pulseCount:4  currentRPM:115.48411  RPM_1s:84.47610
+Time_:39.519  RPM_1s:84.48  averagedRPM:116.38
+Time:39.867  pulseCount:2  currentRPM:215.97339  RPM_1s:215.97339
+Time:39.953  pulseCount:3  currentRPM:232.54732  RPM_1s:224.26036
+Time:40.047  pulseCount:4  currentRPM:211.70742  RPM_1s:220.07605
+Time:40.259  pulseCount:5  currentRPM:94.49831  RPM_1s:188.68161
+Time_:40.715  RPM_1s:188.68  averagedRPM:118.51
+Time:41.282  pulseCount:2  currentRPM:144.61839  RPM_1s:144.61839
+Time:41.399  pulseCount:3  currentRPM:170.34324  RPM_1s:157.48081
+Time:41.553  pulseCount:4  currentRPM:130.14309  RPM_1s:148.36824
+Time:41.693  pulseCount:5  currentRPM:142.85612  RPM_1s:146.99021
+Time:41.806  pulseCount:6  currentRPM:176.54588  RPM_1s:152.90134
+Time:41.874  pulseCount:7  currentRPM:296.41047  RPM_1s:176.81953
+Time_:41.917  RPM_1s:176.82  averagedRPM:120.18
+Time:42.276  pulseCount:2  currentRPM:240.65941  RPM_1s:240.65941
+Time:42.358  pulseCount:3  currentRPM:242.68016  RPM_1s:241.66978
+Time:42.464  pulseCount:4  currentRPM:188.57784  RPM_1s:223.97247
+Time:42.665  pulseCount:5  currentRPM:99.37444  RPM_1s:192.82296
+Time_:43.114  RPM_1s:192.82  averagedRPM:122.19
+Time:43.916  pulseCount:2  currentRPM:117.47913  RPM_1s:117.47913
+Time_:44.315  RPM_1s:117.48  averagedRPM:122.07
+Time_:45.510  RPM_1s:0.00  averagedRPM:118.85
+Time:46.038  pulseCount:2  currentRPM:77.03537  RPM_1s:77.03537
+Time:46.181  pulseCount:3  currentRPM:139.99132  RPM_1s:108.51335
+Time:46.285  pulseCount:4  currentRPM:192.79152  RPM_1s:136.60607
+Time:46.374  pulseCount:5  currentRPM:224.21525  RPM_1s:158.50837
+Time:46.462  pulseCount:6  currentRPM:226.73680  RPM_1s:172.15405
+Time:46.542  pulseCount:7  currentRPM:251.73699  RPM_1s:185.41788
+Time:46.605  pulseCount:8  currentRPM:315.36788  RPM_1s:203.98216
+Time:46.685  pulseCount:9  currentRPM:250.26591  RPM_1s:209.76763
+Time_:46.722  RPM_1s:209.77  averagedRPM:121.19
+Time:47.026  pulseCount:2  currentRPM:263.76177  RPM_1s:263.76177
+Time:47.104  pulseCount:3  currentRPM:256.01966  RPM_1s:259.89072
+Time:47.197  pulseCount:4  currentRPM:214.20386  RPM_1s:244.66176
+Time:47.285  pulseCount:5  currentRPM:227.51576  RPM_1s:240.37526
+Time:47.373  pulseCount:6  currentRPM:227.16431  RPM_1s:237.73307
+Time:47.457  pulseCount:7  currentRPM:238.29949  RPM_1s:237.82747
+Time:47.535  pulseCount:8  currentRPM:256.39711  RPM_1s:240.48028
+Time:47.606  pulseCount:9  currentRPM:282.96948  RPM_1s:245.79143
+Time:47.767  pulseCount:10  currentRPM:124.41215  RPM_1s:232.30484
+Time:47.901  pulseCount:11  currentRPM:148.39658  RPM_1s:223.91402
+Time_:47.925  RPM_1s:223.91  averagedRPM:123.75
+Time:48.181  pulseCount:2  currentRPM:400.04801  RPM_1s:400.04801
+Time:48.226  pulseCount:3  currentRPM:443.55733  RPM_1s:421.80267
+Time:48.287  pulseCount:4  currentRPM:330.80269  RPM_1s:391.46934
+Time:48.355  pulseCount:5  currentRPM:290.75684  RPM_1s:366.29122
+Time:48.450  pulseCount:6  currentRPM:211.69846  RPM_1s:335.37267
+Time:48.560  pulseCount:7  currentRPM:182.32039  RPM_1s:309.86395
+Time:48.747  pulseCount:8  currentRPM:106.58027  RPM_1s:280.82343
+Time:49.008  pulseCount:9  currentRPM:76.70535  RPM_1s:255.30867
+Time_:49.130  RPM_1s:255.31  averagedRPM:126.96
+Time:49.490  pulseCount:2  currentRPM:153.78346  RPM_1s:153.78346
+Time:49.613  pulseCount:3  currentRPM:162.52499  RPM_1s:158.15422
+Time:49.711  pulseCount:4  currentRPM:202.63835  RPM_1s:172.98227
+Time:49.810  pulseCount:5  currentRPM:203.28302  RPM_1s:180.55745
+Time:49.878  pulseCount:6  currentRPM:294.62023  RPM_1s:203.37001
+Time:49.954  pulseCount:7  currentRPM:262.28820  RPM_1s:213.18971
+Time:50.001  pulseCount:8  currentRPM:427.77089  RPM_1s:243.84416
+Time:50.039  pulseCount:9  currentRPM:517.59834  RPM_1s:278.06344
+Time:50.079  pulseCount:10  currentRPM:506.53429  RPM_1s:303.44909
+Time:50.124  pulseCount:11  currentRPM:439.21293  RPM_1s:317.02547
+Time:50.179  pulseCount:12  currentRPM:366.41445  RPM_1s:321.51538
+Time:50.232  pulseCount:13  currentRPM:374.51781  RPM_1s:325.93225
+Time:50.289  pulseCount:14  currentRPM:354.69797  RPM_1s:328.14500
+Time_:50.337  RPM_1s:328.14  averagedRPM:131.75
+Time:50.720  pulseCount:2  currentRPM:114.55541  RPM_1s:114.55541
+Time:50.809  pulseCount:3  currentRPM:224.28314  RPM_1s:169.41927
+Time:50.898  pulseCount:4  currentRPM:226.19573  RPM_1s:188.34476
+Time:51.054  pulseCount:5  currentRPM:128.17966  RPM_1s:173.30348
+Time_:51.542  RPM_1s:173.30  averagedRPM:132.72
+Time:51.834  pulseCount:2  currentRPM:227.02764  RPM_1s:227.02764
+Time:51.925  pulseCount:3  currentRPM:220.81880  RPM_1s:223.92322
+Time:52.016  pulseCount:4  currentRPM:219.30546  RPM_1s:222.38397
+Time:52.087  pulseCount:5  currentRPM:281.29791  RPM_1s:237.11245
+Time:52.156  pulseCount:6  currentRPM:288.31738  RPM_1s:247.35344
+Time:52.228  pulseCount:7  currentRPM:278.09063  RPM_1s:252.47630
+Time:52.323  pulseCount:8  currentRPM:212.15882  RPM_1s:246.71666
+Time:52.694  pulseCount:9  currentRPM:53.89151  RPM_1s:222.61352
+Time_:52.741  RPM_1s:222.61  averagedRPM:134.76
+Time:53.459  pulseCount:2  currentRPM:44.22509  RPM_1s:44.22509
+Time:53.529  pulseCount:3  currentRPM:286.11894  RPM_1s:165.17201
+Time:53.578  pulseCount:4  currentRPM:404.30994  RPM_1s:244.88466
+Time:53.630  pulseCount:5  currentRPM:382.63598  RPM_1s:279.32249
+Time:53.692  pulseCount:6  currentRPM:325.84434  RPM_1s:288.62686
+Time:53.754  pulseCount:7  currentRPM:320.61044  RPM_1s:293.95746
+Time:53.831  pulseCount:8  currentRPM:260.43701  RPM_1s:289.16882
+Time:53.919  pulseCount:9  currentRPM:228.63414  RPM_1s:281.60199
+Time_:53.946  RPM_1s:281.60  averagedRPM:138.03
+Time:54.366  pulseCount:2  currentRPM:142.38118  RPM_1s:142.38118
+Time:54.492  pulseCount:3  currentRPM:159.04446  RPM_1s:150.71282
+Time:54.642  pulseCount:4  currentRPM:132.91421  RPM_1s:144.77995
+Time:54.731  pulseCount:5  currentRPM:223.97169  RPM_1s:164.57789
+Time:54.836  pulseCount:6  currentRPM:191.12054  RPM_1s:169.88642
+Time:54.962  pulseCount:7  currentRPM:159.00400  RPM_1s:168.07268
+Time:55.089  pulseCount:8  currentRPM:157.44064  RPM_1s:166.55382
+Time_:55.152  RPM_1s:166.55  averagedRPM:138.65
+Time:55.500  pulseCount:2  currentRPM:210.17897  RPM_1s:210.17897
+Time:55.618  pulseCount:3  currentRPM:168.95888  RPM_1s:189.56892
+Time:55.793  pulseCount:4  currentRPM:114.08362  RPM_1s:164.40716
+Time:56.035  pulseCount:5  currentRPM:82.91943  RPM_1s:144.03522
+Time_:56.351  RPM_1s:144.04  averagedRPM:138.76
+Time:56.890  pulseCount:2  currentRPM:75.05592  RPM_1s:75.05592
+Time:57.324  pulseCount:3  currentRPM:46.11217  RPM_1s:60.58404
+Time_:57.551  RPM_1s:60.58  averagedRPM:137.13
+Time_:58.743  RPM_1s:0.00  averagedRPM:134.33
+Time:59.510  pulseCount:2  currentRPM:37.95974  RPM_1s:37.95974
+Time_:59.954  RPM_1s:37.96  averagedRPM:132.41
+Time:60.972  pulseCount:2  currentRPM:49.46014  RPM_1s:49.46014
+Time_:61.150  RPM_1s:49.46  averagedRPM:130.78
+Time:61.567  pulseCount:2  currentRPM:134.52523  RPM_1s:134.52523
+Time:61.756  pulseCount:3  currentRPM:106.04341  RPM_1s:120.28432
+Time:62.144  pulseCount:4  currentRPM:51.51625  RPM_1s:97.36163
+Time_:62.345  RPM_1s:97.36  averagedRPM:130.14
+Time:62.900  pulseCount:2  currentRPM:101.39623  RPM_1s:101.39623
+Time:63.007  pulseCount:3  currentRPM:186.01536  RPM_1s:143.70580
+Time:63.081  pulseCount:4  currentRPM:269.87640  RPM_1s:185.76266
+Time:63.158  pulseCount:5  currentRPM:258.88292  RPM_1s:204.04273
+Time:63.261  pulseCount:6  currentRPM:195.10672  RPM_1s:202.25553
+Time:63.416  pulseCount:7  currentRPM:129.06806  RPM_1s:190.05762
+Time_:63.538  RPM_1s:190.06  averagedRPM:131.27
+Time:64.154  pulseCount:2  currentRPM:95.96146  RPM_1s:95.96146
+Time:64.415  pulseCount:3  currentRPM:76.88611  RPM_1s:86.42379
+Time:64.678  pulseCount:4  currentRPM:76.05720  RPM_1s:82.96826
+Time_:64.742  RPM_1s:82.97  averagedRPM:130.37
+Time:65.158  pulseCount:2  currentRPM:165.81823  RPM_1s:165.81823
+Time:65.246  pulseCount:3  currentRPM:227.86570  RPM_1s:196.84196
+Time:65.329  pulseCount:4  currentRPM:241.60133  RPM_1s:211.76175
+Time:65.422  pulseCount:5  currentRPM:214.75357  RPM_1s:212.50971
+Time:65.527  pulseCount:6  currentRPM:189.95517  RPM_1s:207.99880
+Time:65.633  pulseCount:7  currentRPM:188.98412  RPM_1s:204.82969
+Time:65.704  pulseCount:8  currentRPM:280.32405  RPM_1s:215.61460
+Time:65.758  pulseCount:9  currentRPM:369.77462  RPM_1s:234.88460
+Time:65.822  pulseCount:10  currentRPM:314.36655  RPM_1s:243.71593
+Time:65.896  pulseCount:11  currentRPM:271.73913  RPM_1s:246.51825
+Time_:65.938  RPM_1s:246.52  averagedRPM:132.48
+Time:66.261  pulseCount:2  currentRPM:258.48810  RPM_1s:258.48810
+Time:66.329  pulseCount:3  currentRPM:296.85923  RPM_1s:277.67367
+Time:66.397  pulseCount:4  currentRPM:292.35065  RPM_1s:282.56599
+Time:66.453  pulseCount:5  currentRPM:355.43550  RPM_1s:300.78337
+Time:66.505  pulseCount:6  currentRPM:385.03003  RPM_1s:317.63270
+Time:66.581  pulseCount:7  currentRPM:262.69817  RPM_1s:308.47695
+Time:66.667  pulseCount:8  currentRPM:234.32649  RPM_1s:297.88402
+Time:66.767  pulseCount:9  currentRPM:199.00101  RPM_1s:285.52365
+Time:66.855  pulseCount:10  currentRPM:227.41486  RPM_1s:279.06712
+Time:66.940  pulseCount:11  currentRPM:235.48805  RPM_1s:274.70921
+Time:67.103  pulseCount:12  currentRPM:123.02923  RPM_1s:260.92012
+Time_:67.140  RPM_1s:260.92  averagedRPM:134.78
+Time:67.494  pulseCount:2  currentRPM:194.53739  RPM_1s:194.53739
+Time:67.568  pulseCount:3  currentRPM:269.71990  RPM_1s:232.12864
+Time:67.627  pulseCount:4  currentRPM:339.42027  RPM_1s:267.89252
+Time:67.684  pulseCount:5  currentRPM:351.68545  RPM_1s:288.84075
+Time:67.753  pulseCount:6  currentRPM:291.12929  RPM_1s:289.29846
+Time:67.851  pulseCount:7  currentRPM:202.67121  RPM_1s:274.86058
+Time:67.991  pulseCount:8  currentRPM:142.88062  RPM_1s:256.00630
+Time:68.198  pulseCount:9  currentRPM:96.86825  RPM_1s:236.11405
+Time_:68.342  RPM_1s:236.11  averagedRPM:136.56
+Time:68.632  pulseCount:2  currentRPM:287.30679  RPM_1s:287.30679
+Time:68.714  pulseCount:3  currentRPM:243.38006  RPM_1s:265.34342
+Time:68.788  pulseCount:4  currentRPM:270.70559  RPM_1s:267.13081
+Time:68.872  pulseCount:5  currentRPM:236.82092  RPM_1s:259.55334
+Time:68.976  pulseCount:6  currentRPM:192.14326  RPM_1s:246.07132
+Time:69.076  pulseCount:7  currentRPM:201.04544  RPM_1s:238.56701
+Time:69.147  pulseCount:8  currentRPM:279.85727  RPM_1s:244.46562
+Time:69.198  pulseCount:9  currentRPM:394.66414  RPM_1s:263.24043

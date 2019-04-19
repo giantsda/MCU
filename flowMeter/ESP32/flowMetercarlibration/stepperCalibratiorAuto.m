@@ -1,6 +1,6 @@
 close all;
 path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration4/';
-filename='calibration4Begin';
+filename='calibration4End';
 
 RPMs=[];
 fid = fopen([path filename]);
