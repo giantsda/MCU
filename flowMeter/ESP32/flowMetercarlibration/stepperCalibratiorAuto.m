@@ -1,6 +1,6 @@
 close all;
-path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration4/';
-filename='calibration4End';
+path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration5/';
+filename='calibration5Start';
 
 RPMs=[];
 fid = fopen([path filename]);
@@ -15,6 +15,7 @@ while  ~feof(fid)
             rpms=[];
             while(~strcmp(l(1:12),'Forward end.') )
                 l = fgetl(fid);
+                 line=line+1;
                 if strcmp(l(1:5),'Time:')
                     rpm=sscanf(l,'Time:%*f  pulseCount:%*d  currentRPM:%f');
                     rpms=[rpms rpm];
