@@ -1,6 +1,6 @@
 close all;
-path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration5/';
-filename='calibration5Start';
+path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration6/';
+filename='calibration6Start';
 
 RPMs=[];
 fid = fopen([path filename]);
@@ -21,7 +21,9 @@ while  ~feof(fid)
                     rpms=[rpms rpm];
                 end
             end
-            rpms(find(rpms(:)>mean(rpms)*1.5))=[];
+            if ~isempty(RPMs)
+                rpms(find(rpms(:)>30+RPMs(i-1,2)))=[];
+            end
             sizeI=length(rpms);
             if (sizeI>0)
                 startI=floor(1+sizeI*0.5);
@@ -49,7 +51,14 @@ SSresid = sum(yresid.^2);
 SStotal = (length(y1)-1) * var(y1);
 p
 R2=1 - SSresid/SStotal
-
 hold on;
-% D=sortrows(D,3);
-plot(D(:,1),D(:,2),'o-')
+y=RPMs(:,2)*p(1)+p(2);
+plot(RPMs(:,2),y);
+
+
+
+% hold on;
+% % D=sortrows(D,3);
+% plot(D(:,1),D(:,2),'o-')
+
+
