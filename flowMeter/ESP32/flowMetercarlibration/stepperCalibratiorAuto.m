@@ -1,6 +1,6 @@
 close all;
-path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration6/';
-filename='calibration6Start';
+path='/home/chen/Desktop/racewayMeasurements/RPM=13.6/Calibration7/';
+filename='calibration7';
 
 RPMs=[];
 fid = fopen([path filename]);
@@ -22,7 +22,7 @@ while  ~feof(fid)
                 end
             end
             if ~isempty(RPMs)
-                rpms(find(rpms(:)>30+RPMs(i-1,2)))=[];
+                rpms(find(rpms(:)>50+RPMs(i-1,2)))=[];
             end
             sizeI=length(rpms);
             if (sizeI>0)
